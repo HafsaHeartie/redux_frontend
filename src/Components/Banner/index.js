@@ -5,13 +5,13 @@ import image3 from "../../Assets/icons arrow-right.png";
 function Banner() {
   return (
     <>
-      <div className=" mt-9 w-screen h-[344px] relative bg-black">
+      <div className="ml-12 mr-12 mt-9 width-[1170px] h-[344px] relative bg-black">
         <img
           className="w-[496px] h-[325px] ml-[396px] top-[16px] absolute"
           src={image2}
           alt="image2"
         />
-        <div className="left-[64px] top-[58px] absolute justify-start items-center gap-6 inline-flex">
+        <div className=" left-[64px] top-[58px] absolute justify-start items-center gap-6 inline-flex">
           <img src={image1} className="w-10 h-[49px]" alt="image1" />
 
           <div className="w-[126px] h-5 text-center text-neutral-50 text-base font-normal font-['Poppins'] leading-normal">
@@ -32,7 +32,6 @@ function Banner() {
           <div className="w-6 h-6 relative" />
         </div>
       </div>
-      
     </>
   );
 }

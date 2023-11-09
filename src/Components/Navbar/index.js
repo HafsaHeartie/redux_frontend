@@ -1,29 +1,37 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import image1 from '../../Assets/Wishlist.png'
-import image2 from '../../Assets/Cart1.png'
+import image1 from "../../Assets/Wishlist.png";
+import image2 from "../../Assets/Cart1.png";
+import { searchItem } from "../../Store/ReduxSlices/CartSlice";
 
 function Navbar() {
   const product = useSelector((state) => state.cart.products);
   const item = useSelector((state) => state.cart.favourite);
+  const search = useSelector((state) => state.cart.search);
+  const dispatch = useDispatch();
+  const searchProduct = (item) => {
+    dispatch(searchItem(item));
+  };
   return (
     <>
+      <div className="h-[45px] bg-black"></div>
       <nav className=" flex justify-between bg-white text-black ">
         <div className="px-5 xl:px-12 py-6 flex w-full items-center">
           <h2 className="text-2xl font-bold">Exclusive</h2>
           <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
             <li>
-              <a className="hover:text-gray-200" href="/home">
+              <a className="border-b hover:border-b-black " href="/home">
                 Home
               </a>
             </li>
             <li>
-              <Link to={"/ProductPage"}
-               className="hover:text-gray-200" >
+              <Link
+                to={"/ProductPage"}
+                className="border-b hover:border-b-black  "
+              >
                 Products
-                </Link>
-              
+              </Link>
             </li>
           </ul>
           <form>
@@ -40,6 +48,8 @@ function Navbar() {
                 className="block w-64 p-3 text-sm text-gray-900  rounded-lg bg-slate-100 focus:ring-blue-500 focus:border-blue-500   dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="What are you looking for?"
                 required
+                value={search}
+                onChange={(e) => searchProduct(e.target.value)}
               />
               <div className="absolute inset-y-0 right-4 flex items-center pl-3 pointer-events-none ">
                 <svg
@@ -61,8 +71,7 @@ function Navbar() {
             </div>
           </form>
           <div className=" relative hidden xl:flex items-center space-x-5 ">
-          
-          <div className="flex items-center hover:text-gray-200">
+            <div className="flex items-center hover:text-gray-200">
               <Link to="/">
                 <img src={image1} alt="" className="" />
               </Link>
@@ -72,15 +81,13 @@ function Navbar() {
                 </span>
               </span>
             </div>
-           
-          
 
-
-
-            <Link to={"/CartList"} className="flex items-center hover:text-gray-200" >
-            <img src={image2} alt="" className="" />
+            <Link
+              to={"/CartList"}
+              className="flex items-center hover:text-gray-200"
+            >
+              <img src={image2} alt="" className="" />
               <span className="flex absolute top-2 ml-4">
-                
                 <span className=" inline-flex justify-center rounded-full h-6 w-6 bg-red-600 ">
                   <div className="text-black flex  ">{product.length}</div>
                 </span>
@@ -88,7 +95,7 @@ function Navbar() {
             </Link>
           </div>
         </div>
-        <a  className="xl:hidden flex mr-6 items-center" href="/">
+        <a className="xl:hidden flex mr-6 items-center" href="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 hover:text-gray-200"
@@ -96,7 +103,6 @@ function Navbar() {
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
-            
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -112,15 +118,7 @@ function Navbar() {
       </nav>
       <div className="absolute bottom-0 right-0 mb-4 mr-4 z-10"></div>
       <hr />
-      
     </>
   );
 }
 export default Navbar;
-
-
-
-
-
-
-

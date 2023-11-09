@@ -2,26 +2,31 @@ import React, { useState } from "react";
 import image1 from "../../Assets/heart small.png";
 import { Button } from "../Buttons";
 import ProductData from "../../Pages/ProductData";
-import {  add, addFavourite } from "../../Store/ReduxSlices/CartSlice";
-import { useDispatch } from "react-redux";
+import { add, addFavourite } from "../../Store/ReduxSlices/CartSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProductCard = () => {
   const dispatch = useDispatch();
+  const searchProduct = useSelector((state) => state.cart.search);
   const [viewAllProduct, setViewAllProduct] = useState(false);
   const Data = viewAllProduct ? ProductData : ProductData.slice(0, 4);
 
   const handleAdd = (item) => {
     dispatch(add(item));
-    console.log(item, 'item')
+    console.log(item, "item");
   };
- const AddFavourite = (item) =>{
-  dispatch(addFavourite(item));
- }
+  const AddFavourite = (item) => {
+    dispatch(addFavourite(item));
+  };
   return (
     <>
       <div className="flex  ml-12">
         <div className="grid grid-cols-2 md:grid-cols-3  lg:grid-cols-4">
-          {Data.map((product) => (
+          {Data.filter((il) =>
+            searchProduct
+              ? il.title.toLowerCase().includes(searchProduct.toLowerCase())
+              : true
+          ).map((product) => (
             <div key={product.id} className=" mb-6 mt-6   w-[322px] shadow-lg">
               <div className="w-[270px] h-[250px] relative bg-neutral-100 rounded">
                 <div className="px-3 py-1 left-[12px] top-[12px] absolute bg-red-500 rounded justify-center items-center gap-2.5 inline-flex">
@@ -37,7 +42,8 @@ const ProductCard = () => {
                       <img
                         src={image1}
                         alt=""
-                        className="flex justify-center " onClick={() => AddFavourite(product)} 
+                        className="flex justify-center "
+                        onClick={() => AddFavourite(product)}
                       />{" "}
                     </div>
                   </div>
@@ -57,7 +63,6 @@ const ProductCard = () => {
                   size="large"
                   className="w-[270px] h-[41px] -ml-14"
                 >
-                  
                   <span className="ml-2" onClick={() => handleAdd(product)}>
                     Add To Cart
                   </span>
